@@ -1,6 +1,12 @@
 # whisper-to-prompt
 
-Record your voice, transcribe it locally with [WhisperKit](https://github.com/anthropics/claude-code), and open [OpenCode](https://opencode.ai) with a clean, rewritten AI-agent instruction.
+Record your voice, transcribe it locally with [WhisperKit](https://github.com/anthropics/claude-code) and open [OpenCode](https://opencode.ai) with a clean, rewritten AI-agent instruction.
+
+## Why this exists
+
+You could dictate into an AI chat, but you'd get a rambling wall of text that wastes tokens. This tool gives you the best of both: speak freely and at length into your microphone, then get back a clean, well-written prompt you can hand off to any AI agent.
+
+Everything runs fully locally, audio never leaves your machine and transcription happens on-device via WhisperKit.
 
 ## How it works
 
@@ -22,17 +28,17 @@ Install [WhisperKit CLI](https://github.com/anthropics/claude-code) and [OpenCod
 ./talk-now.sh
 ```
 
-Speak, wait for the beep, and OpenCode opens with your rewritten instruction.
+Speak, wait for the beep and OpenCode opens with your rewritten instruction.
 
 ## Project layout
 
-| Path | Purpose |
-|------|---------|
-| `talk-now.sh` | Main script |
-| `prompt.md` | Prompt template (editable) |
-| `archive/` | Timestamped `.wav` + `.txt` pairs from every run |
-| `audio.wav` | Latest recording (overwritten each run) |
-| `transcript.txt` | Latest transcript (overwritten each run) |
+| Path             | Purpose                                          |
+| ---------------- | ------------------------------------------------ |
+| `talk-now.sh`    | Main script                                      |
+| `prompt.md`      | Prompt template (editable)                       |
+| `archive/`       | Timestamped `.wav` + `.txt` pairs from every run |
+| `audio.wav`      | Latest recording (overwritten each run)          |
+| `transcript.txt` | Latest transcript (overwritten each run)         |
 
 ## License
 
