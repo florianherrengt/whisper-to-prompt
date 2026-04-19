@@ -4,6 +4,7 @@ set -e
 DIR="$(cd "$(dirname "$0")" && pwd)"
 AUDIO="$DIR/audio.wav"
 TRANSCRIPT_FILE="$DIR/transcript.txt"
+CLEAN_FILE="$DIR/transcript-clean.txt"
 ARCHIVE="$DIR/archive"
 PROMPT_TEMPLATE="$DIR/prompt.md"
 TIMESTAMP=$(date +"%Y%m%d-%H%M%S")
@@ -11,7 +12,7 @@ TIMESTAMP=$(date +"%Y%m%d-%H%M%S")
 mkdir -p "$ARCHIVE"
 
 INPUT=$(mktemp)
-trap 'rm -f "$INPUT"' EXIT
+trap 'rm -f "$INPUT" "$CLEAN_FILE"' EXIT
 
 for cmd in sox whisperkit-cli opencode; do
   if ! command -v "$cmd" &>/dev/null; then
@@ -70,10 +71,16 @@ echo "Building prompt..."
       printf '%s\n' "$line"
     fi
   done < "$PROMPT_TEMPLATE"
+  printf '\n\nWrite the cleaned-up transcript to this file: %s\n' "$CLEAN_FILE"
 } > "$INPUT"
 
 echo "Opening in OpenCode..."
 opencode --prompt "$(cat "$INPUT")" "$DIR"
 
-pbcopy < "$TRANSCRIPT_FILE"
-echo "Transcript copied to clipboard."
+if [ -f "$CLEAN_FILE" ]; then
+  cp "$CLEAN_FILE" "$ARCHIVE/${TIMESTAMP}-clean.txt"
+  pbcopy < "$CLEAN_FILE"
+  echo "Cleaned transcript copied to clipboard."
+else
+  echo "Warning: cleaned transcript not found at $CLEAN_FILE" >&2
+fi

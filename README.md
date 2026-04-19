@@ -30,6 +30,10 @@ Install [WhisperKit CLI](https://github.com/anthropics/claude-code) and [OpenCod
 
 Speak, wait for the beep and OpenCode opens with your rewritten instruction.
 
+## OpenCode integration
+
+The rewrite step runs inside OpenCode, so the agent has access to search, MCP tools, and any other integrations already configured in your environment. It can pull in project context and external references to produce better prompts than the raw transcript alone could yield.
+
 ## Project layout
 
 | Path             | Purpose                                          |
